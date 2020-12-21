@@ -7,9 +7,7 @@ import com.example.currencyapp.app.base.LiveDataState
 import com.example.currencyapp.model.response.Currency
 import com.example.currencyapp.model.response.CurrencyDataList
 import com.example.currencyapp.model.response.currency.CurrencyResponse
-import com.example.currencyapp.model.response.currency.Symbols
 import com.example.currencyapp.model.response.latest.LatestResponse
-import com.example.currencyapp.model.response.latest.Rates
 import com.example.currencyapp.ui.home.repository.HomeRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -22,12 +20,12 @@ class HomeViewModel(
     connectivityManager: ConnectivityManager
 ) : BaseViewModel(connectivityManager) {
 
-    private val currenciesListData = LiveDataState<ArrayList<Currency>>()
-    private val pricesListData = LiveDataState<Rates>()
+    private var currenciesListData = LiveDataState<ArrayList<Currency>>()
+    private var pricesListData = LiveDataState<ArrayList<Currency>>()
     private val disposable = CompositeDisposable()
-    private val disposableList = CompositeDisposable()
+    private val disposablePrice = CompositeDisposable()
 
-    companion object{
+    companion object {
         private val initCurrencyList = CurrencyDataList.getInitList()
     }
 
@@ -68,40 +66,81 @@ class HomeViewModel(
         return currenciesListData
     }
 
-    fun refreshHomeList(): LiveDataState<ArrayList<Currency>> {
+    fun refreshHomeList(currencyName: String): LiveDataState<ArrayList<Currency>> {
 
         if (!isNetworkAvailable) {
-            publishNoInternet(currenciesListData)
-            return currenciesListData
+            publishNoInternet(pricesListData)
+            return pricesListData
         }
 
-        publishLoading(currenciesListData)
+        publishLoading(pricesListData)
 
-        disposable.add(
-            repository.getLatestPrice().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(
-                    object : DisposableSingleObserver<LatestResponse>() {
-                        override fun onSuccess(response: LatestResponse) {
-                            for (i in 0 until initCurrencyList.size) {
-                                val item = initCurrencyList[i]
-                                when (i) {
-                                    0 -> item.price = response.rates.EGP
-                                    1 -> item.price = response.rates.EUR
-                                    2 -> item.price = response.rates.GBP
-                                    3 -> item.price = response.rates.USD
+        if (initCurrencyList[0].price == 0.0) {
+            disposablePrice.add(
+                repository.getLatestPrice().subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribeWith(
+                        object : DisposableSingleObserver<LatestResponse>() {
+                            override fun onSuccess(response: LatestResponse) {
+                                for (i in 0 until initCurrencyList.size) {
+                                    val item = initCurrencyList[i]
+                                    when (i) {
+                                        0 -> item.price = response.rates.EGP
+                                        1 -> item.price = response.rates.EUR
+                                        2 -> item.price = response.rates.GBP
+                                        3 -> item.price = response.rates.USD
+                                    }
+                                    initCurrencyList[i] = item
                                 }
-                                initCurrencyList[i] = item
+                                print(response)
+                                val list = ArrayList<Currency>()
+                                initCurrencyList.forEach { list.add(it) }
+                                publishResult(
+                                    pricesListData, getCurrencyList(currencyName, list)
+                                )
                             }
-                            print(response)
-                            publishResult(currenciesListData, initCurrencyList)
-                        }
 
-                        override fun onError(error: Throwable) {
-                            publishError(currenciesListData, error)
+                            override fun onError(error: Throwable) {
+                                publishError(pricesListData, error)
+                            }
                         }
+                    ))
+        } else {
+            val list = ArrayList<Currency>()
+            initCurrencyList.forEach { list.add(it) }
+            publishResult(
+                pricesListData, getCurrencyList(currencyName, list)
+            )
+        }
+
+        return pricesListData
+    }
+
+    private fun getCurrencyList(
+        currencyName: String,
+        myList: ArrayList<Currency>
+    ): ArrayList<Currency> {
+        if (!myList.isNullOrEmpty()) {
+            val selectedCurrency = myList.find { it.name == currencyName }
+
+            var cachedPrice = 0.0
+
+            if (selectedCurrency != null)
+
+            return if (selectedCurrency.price == 1.0) {
+                myList
+            } else {
+                for (i in 0 until myList.size) {
+                    val item = myList[i]
+                    if (item.symbol == selectedCurrency.symbol) {
+                        cachedPrice = selectedCurrency.price
+                        myList[i].price = 1.0
+                    } else {
+                        myList[i].price = item.price / cachedPrice
                     }
-                ))
-
-        return currenciesListData
+                }
+                myList
+            }
+        }
+        return myList
     }
 }

@@ -79,9 +79,9 @@ class HomeFragment : BaseFragment(), OnItemClickedListener, View.OnClickListener
         })
     }
 
-    private fun observeCurrencyPrices() {
+    private fun observeCurrencyPrices(currencyName: String) {
 
-        viewModel.refreshHomeList().observe(viewLifecycleOwner, {
+        viewModel.refreshHomeList(currencyName).observe(viewLifecycleOwner, {
             when (it.getStatus()) {
 
                 DataState.DataStatus.LOADING -> {
@@ -125,6 +125,6 @@ class HomeFragment : BaseFragment(), OnItemClickedListener, View.OnClickListener
     }
 
     override fun onClick(p0: View?) {
-        observeCurrencyPrices()
+        observeCurrencyPrices(sp_currencies.selectedItem.toString())
     }
 }

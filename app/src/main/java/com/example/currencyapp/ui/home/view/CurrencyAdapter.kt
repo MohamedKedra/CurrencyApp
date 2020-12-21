@@ -8,11 +8,13 @@ import com.example.currencyapp.R
 import com.example.currencyapp.model.response.Currency
 import kotlinx.android.synthetic.main.item_currency_layout.view.*
 
-class CurrencyAdapter(private val onItemClickedListener: OnItemClickedListener) : RecyclerView.Adapter<CurrencyAdapter.CurrencyHolder>() {
+class CurrencyAdapter(private val onItemClickedListener: OnItemClickedListener) :
+    RecyclerView.Adapter<CurrencyAdapter.CurrencyHolder>() {
 
     var list: List<Currency> = ArrayList()
 
-    inner class CurrencyHolder(itemView: View) : RecyclerView.ViewHolder(itemView) , View.OnClickListener{
+    inner class CurrencyHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
 
         init {
             itemView.setOnClickListener(this)
@@ -24,12 +26,13 @@ class CurrencyAdapter(private val onItemClickedListener: OnItemClickedListener) 
 
     }
 
-    fun addList(list: List<Currency>){
+    fun addList(list: List<Currency>) {
         this.list = list
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_currency_layout,parent,false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_currency_layout, parent, false)
         return CurrencyHolder(view)
     }
 
