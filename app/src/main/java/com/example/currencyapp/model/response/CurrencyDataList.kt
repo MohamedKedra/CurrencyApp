@@ -3,7 +3,6 @@ package com.example.currencyapp.model.response
 class CurrencyDataList {
 
     companion object{
-
         fun getInitList():ArrayList<Currency>{
             val currencyList = ArrayList<Currency>()
             currencyList.add(Currency("EGP","",0.0))
