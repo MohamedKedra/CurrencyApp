@@ -1,4 +1,4 @@
-package com.example.currencyapp.ui.main
+package com.example.currencyapp.ui.home.view
 
 import android.view.View
 

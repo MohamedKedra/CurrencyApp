@@ -6,6 +6,7 @@ import com.example.currencyapp.model.network.ApiService
 import com.example.currencyapp.utils.Constants
 import org.koin.dsl.module
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
@@ -13,6 +14,7 @@ val appModule = module {
     single {
         Retrofit.Builder().baseUrl(Constants.API.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 
