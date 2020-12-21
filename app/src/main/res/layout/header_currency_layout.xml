@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:layout_margin="@dimen/small_margin_space"
+        android:id="@+id/sp_currencies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_margin="@dimen/small_margin_space"
+        android:id="@+id/bt_convert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/convert_currency"
+        android:textAllCaps="false" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

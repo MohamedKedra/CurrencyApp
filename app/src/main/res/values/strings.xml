@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">CurrencyApp</string>
+    <string name="app_name">CurrencyApp</string>>
+    <string name="convert_currency">Convert Currency</string>
+    <string name="add_your_amount">add your amount</string>
+    <string name="base_currency">Your base Currency</string>
+    <string name="error">Error in get Data from server</string>
+    <string name="no_internet">No Internet Connection</string>
+    <string name="no_items">There is no items</string>
 </resources>
