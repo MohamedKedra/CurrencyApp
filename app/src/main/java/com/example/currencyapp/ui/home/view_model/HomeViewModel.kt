@@ -46,10 +46,16 @@ class HomeViewModel(
                             for (i in 0 until initCurrencyList.size) {
                                 val item = initCurrencyList[i]
                                 when (i) {
-                                    0 -> item.name = response.symbols.EGP
-                                    1 -> item.name = response.symbols.EUR
-                                    2 -> item.name = response.symbols.GBP
-                                    3 -> item.name = response.symbols.USD
+                                    0 -> item.name = response.symbols.AED
+                                    1 -> item.name = response.symbols.CHF
+                                    2 -> item.name = response.symbols.CNY
+                                    3 -> item.name = response.symbols.EGP
+                                    4 -> item.name = response.symbols.EUR
+                                    5 -> item.name = response.symbols.GBP
+                                    6 -> item.name = response.symbols.JPY
+                                    7 -> item.name = response.symbols.KWD
+                                    8 -> item.name = response.symbols.SYP
+                                    9 -> item.name = response.symbols.USD
                                 }
                                 initCurrencyList[i] = item
                             }
@@ -84,10 +90,16 @@ class HomeViewModel(
                                 for (i in 0 until initCurrencyList.size) {
                                     val item = initCurrencyList[i]
                                     when (i) {
-                                        0 -> item.price = response.rates.EGP
-                                        1 -> item.price = response.rates.EUR
-                                        2 -> item.price = response.rates.GBP
-                                        3 -> item.price = response.rates.USD
+                                        0 -> item.price = response.rates.AED
+                                        1 -> item.price = response.rates.CHF
+                                        2 -> item.price = response.rates.CNY
+                                        3 -> item.price = response.rates.EGP
+                                        4 -> item.price = response.rates.EUR
+                                        5 -> item.price = response.rates.GBP
+                                        6 -> item.price = response.rates.JPY
+                                        7 -> item.price = response.rates.KWD
+                                        8 -> item.price = response.rates.SYP
+                                        9 -> item.price = response.rates.USD
                                     }
                                     initCurrencyList[i] = item
                                 }

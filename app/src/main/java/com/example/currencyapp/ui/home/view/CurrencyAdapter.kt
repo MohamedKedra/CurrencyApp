@@ -38,6 +38,7 @@ class CurrencyAdapter(private val onItemClickedListener: OnItemClickedListener) 
 
     override fun onBindViewHolder(holder: CurrencyHolder, position: Int) {
         val item = list[position]
+        holder.itemView.iv_flag.setImageResource(item.imageRes)
         holder.itemView.tv_currency.text = item.name.plus("(").plus(item.symbol).plus(")")
         holder.itemView.tv_price.text = item.price.toString()
     }
