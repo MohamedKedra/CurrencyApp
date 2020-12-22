@@ -16,36 +16,36 @@ ____________________________________________________
 Question #2
 Find Anagram with high order functions
 
-isAnagram("debit card","bad credit",{str1:String,str2:String -> 
-        val hmap1 = HashMap<Char, Int?>()
-        val hmap2 = HashMap<Char, Int?>()
-        val arr1 = str1.toCharArray()
-        val arr2 = str2.toCharArray()
+        isAnagram("debit card","bad credit",{str1:String,str2:String -> 
+                  val hmap1 = HashMap<Char, Int?>()
+                  val hmap2 = HashMap<Char, Int?>()
+                  val arr1 = str1.toCharArray()
+                  val arr2 = str2.toCharArray()
 
-        for (i in arr1.indices) {
-            if (hmap1[arr1[i]] == null) {
-                hmap1[arr1.get(i)] = 1
-            } else {
-                var c: Int = hmap1[arr1[i]] as Int
-                hmap1[arr1[i]] = ++c
-            }
-        }
+                  for (i in arr1.indices) {
+                      if (hmap1[arr1[i]] == null) {
+                         hmap1[arr1.get(i)] = 1
+                      } else {
+                        var c: Int = hmap1[arr1[i]] as Int
+                        hmap1[arr1[i]] = ++c
+                      }
+                  }
 
-        for (j in arr2.indices) {
-            if (hmap2[arr2[j]] == null) hmap2[arr2.get(j)] = 1 else {
-                var d: Int = hmap2[arr2[j]] as Int
-                hmap2[arr2.get(j)] = ++d
-            }
-        }
+                 for (j in arr2.indices) {
+                     if (hmap2[arr2[j]] == null){
+                        hmap2[arr2.get(j)] = 1
+                     }else {
+                       var d: Int = hmap2[arr2[j]] as Int
+                       hmap2[arr2.get(j)] = ++d
+                     }
+                 }
         
-        hmap1 == hmap2
-    })
+                 hmap1 == hmap2
+                 })
     
-fun isAnagram(str1: String, str2: String, hasAnagram: (String,String) -> Boolean){ 
-
-    print(hasAnagram(str1,str2))
-
-}
+       fun isAnagram(str1: String, str2: String, hasAnagram: (String,String) -> Boolean){ 
+            print(hasAnagram(str1,str2))
+       }
 
 
 
