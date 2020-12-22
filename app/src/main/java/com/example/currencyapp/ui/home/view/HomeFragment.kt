@@ -10,18 +10,16 @@ import com.example.currencyapp.app.base.DataState
 import com.example.currencyapp.model.response.Currency
 import com.example.currencyapp.model.response.currency.Symbols
 import com.example.currencyapp.ui.home.view_model.HomeViewModel
+import com.example.currencyapp.utils.Constants
 import kotlinx.android.synthetic.main.header_currency_layout.*
 import kotlinx.android.synthetic.main.home_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : BaseFragment(), OnItemClickedListener, View.OnClickListener {
 
-    companion object {
-        fun newInstance() = HomeFragment()
-    }
-
     private val viewModel: HomeViewModel by viewModel()
     private lateinit var adapter: CurrencyAdapter
+    private lateinit var currencies: ArrayList<Currency>
 
     override val layoutId: Int
         get() = R.layout.home_fragment
@@ -36,7 +34,7 @@ class HomeFragment : BaseFragment(), OnItemClickedListener, View.OnClickListener
 
     private fun initDropdownList(currencies: ArrayList<Currency>) {
         val list = ArrayList<String>()
-        currencies.forEach { list.add(it.name) }
+        currencies.forEach { list.add(it.name.toString()) }
         val adapter =
             ArrayAdapter(activity?.applicationContext!!, android.R.layout.simple_spinner_item, list)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -92,6 +90,7 @@ class HomeFragment : BaseFragment(), OnItemClickedListener, View.OnClickListener
                     hideLayoutErrorAndLoading()
                     it?.getData()?.let { res ->
                         if (res.size > 0) {
+                            currencies = res
                             adapter.addList(res)
                             adapter.notifyDataSetChanged()
                         }
@@ -120,8 +119,12 @@ class HomeFragment : BaseFragment(), OnItemClickedListener, View.OnClickListener
         })
     }
 
-    override fun onItemClicked(view: View) {
-
+    override fun onItemClicked(view: View,currency: Currency) {
+        val bundle = Bundle()
+        bundle.putParcelable(Constants.BUNDLE.SELECTED,currency)
+        bundle.putString(Constants.BUNDLE.CURRENT,sp_currencies.selectedItem.toString())
+        bundle.putParcelableArrayList(Constants.BUNDLE.LIST,currencies)
+        navigationController.navigate(R.id.action_HomeFragment_to_ConverterFragment,bundle)
     }
 
     override fun onClick(p0: View?) {

@@ -5,19 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBar
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.loading_layout.*
 
 abstract class BaseFragment : Fragment() {
 
     protected abstract val layoutId: Int
+    protected lateinit var navigationController: NavController
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        navigationController = findNavController()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(layoutId, container, false)
+        val view =  inflater.inflate(layoutId, container, false)
+        return view
     }
 
     fun showLayoutLoading(isInitData: Boolean) {

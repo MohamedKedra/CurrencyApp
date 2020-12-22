@@ -21,7 +21,7 @@ class CurrencyAdapter(private val onItemClickedListener: OnItemClickedListener) 
         }
 
         override fun onClick(p0: View?) {
-            onItemClickedListener.onItemClicked(itemView)
+            onItemClickedListener.onItemClicked(itemView,list[adapterPosition])
         }
 
     }

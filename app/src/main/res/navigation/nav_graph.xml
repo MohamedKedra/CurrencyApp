@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/HomeFragment">
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.currencyapp.ui.home.view.HomeFragment"
+        tools:layout="@layout/home_fragment">
+
+        <action
+            android:id="@+id/action_HomeFragment_to_ConverterFragment"
+            app:destination="@id/ConverterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ConverterFragment"
+        android:name="com.example.currencyapp.ui.converter.ConverterFragment"
+        tools:layout="@layout/converter_fragment">
+
+    </fragment>
+</navigation>
